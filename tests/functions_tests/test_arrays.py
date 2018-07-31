@@ -125,3 +125,26 @@ class TestConcat(unittest.TestCase):
         y = self.model(self.x1, self.x2)
         onnx_model = onnx_chainer.export(self.model, (self.x1, self.x2))
         model.expect(onnx_model, (self.x1,), y)
+
+
+class TestWhere(unittest.TestCase):
+
+    def setUp(self):
+        class Model(chainer.Chain):
+
+            def __init__(self):
+                super(Model, self).__init__()
+
+            def __call__(self, condition, x1, x2):
+                return F.where(condition, x1, x2)
+
+        self.model = Model()
+        self.cond = np.array([[1, 0], [0, 1]], dtype=np.bool)
+        self.x1 = np.array([[1, 2], [3, 4]], np.float32)
+        self.x2 = np.zeros((2, 2), np.float32)
+        self.fn = 'Where.onnx'
+
+    def test_backend(self):
+        y = self.model(self.cond, self.x1, self.x2)
+        onnx_model = onnx_chainer.export(self.model, (self.cond, self.x1, self.x2))
+        model.expect(onnx_model, (self.cond, self.x1, self.x2), y)

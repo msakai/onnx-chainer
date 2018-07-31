@@ -41,6 +41,7 @@ operators = {
     'Squeeze': 'Squeeze',
     'Tile': 'Tile',
     'Transpose': 'Transpose',
+    'Where': 'Where',
 
     # Connection
     'Convolution2DFunction': 'Conv',
