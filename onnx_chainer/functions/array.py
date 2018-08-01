@@ -173,3 +173,42 @@ def convert_Transpose(func, input_names, output_names, parameters):
         )
 
     return node,
+
+
+# This is workaround implementation for ONNX not having operator
+# corresponding to F.where. This implementation approximates
+# F.where(cond, x1, x2) as (cond * x1) + ((1-cond) * x2) but the
+# behavior on NaN and infinities are different.
+def convert_Where(func, input_names, output_names, parameters):
+    typ = func.inputs[1].dtype if isinstance(
+        func.inputs[1].dtype, np.dtype) else np.dtype(func.inputs[1].dtype)
+
+    one = chainer.Parameter(np.array(1, dtype=typ))
+    parameters.append(one)
+
+    n1_out_name = gensym()
+    n2_out_name = gensym()
+    n3_out_name = gensym()
+    n4_out_name = gensym()
+    n5_out_name = gensym()
+
+    n1 = helper.make_node(
+        "Cast", [input_names[0]], [n1_out_name],
+        to=mapping.TENSOR_TYPE_TO_NAME[NP_TYPE_TO_TENSOR_TYPE[typ]]
+    )
+    n2 = helper.make_node("Neg", [n1_out_name], [n2_out_name])
+    n3 = helper.make_node("Add", [n2_out_name, str(id(one))], [n3_out_name])
+    n4 = helper.make_node("Mul", [n1_out_name, input_names[1]], [n4_out_name])
+    n5 = helper.make_node("Mul", [n3_out_name, input_names[2]], [n5_out_name])
+    n6 = helper.make_node("Add", [n4_out_name, n5_out_name], [output_names[0]])
+
+    return n6, n5, n4, n3, n2, n1
+
+
+dummy_objects = []
+
+
+def gensym():
+    o = object()
+    dummy_objects.append(o)
+    return str(id(o))
