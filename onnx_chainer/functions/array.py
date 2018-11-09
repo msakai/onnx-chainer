@@ -219,6 +219,11 @@ def convert_Transpose(func, onnx_op_name, opset_version, input_names, output_nam
 # F.where(cond, x1, x2) as (cond * x1) + ((1-cond) * x2) but the
 # behavior on NaN and infinities are different.
 def convert_Where(func, onnx_op_name, opset_version, input_names, output_names, parameters):
+    if len(input_names) == 2:
+        condition_param = chainer.Parameter(func.condition)
+        parameters.append(condition_param)
+        input_names.insert(0, str(id(condition_param)))
+
     typ = func.inputs[1].dtype if isinstance(
         func.inputs[1].dtype, np.dtype) else np.dtype(func.inputs[1].dtype)
 
