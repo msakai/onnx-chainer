@@ -34,6 +34,7 @@ from onnx_chainer.functions.math import convert_Add  # NOQA
 from onnx_chainer.functions.math import convert_AddConstant  # NOQA
 from onnx_chainer.functions.math import convert_Div  # NOQA
 from onnx_chainer.functions.math import convert_Mul  # NOQA
+from onnx_chainer.functions.math import convert_MulConstant  # NOQA
 from onnx_chainer.functions.math import convert_Neg  # NOQA
 from onnx_chainer.functions.math import convert_PowVarConst  # NOQA
 from onnx_chainer.functions.math import convert_Sub  # NOQA
@@ -44,6 +45,11 @@ from onnx_chainer.functions.math import convert_MatMul  # NOQA
 from onnx_chainer.functions.math import convert_Maximum  # NOQA
 from onnx_chainer.functions.math import convert_Minimum  # NOQA
 from onnx_chainer.functions.math import convert_Sqrt  # NOQA
+from onnx_chainer.functions.math import convert_LogSumExp  # NOQA
+from onnx_chainer.functions.math import convert_Max  # NOQA
+from onnx_chainer.functions.math import convert_Mean  # NOQA
+from onnx_chainer.functions.math import convert_Min  # NOQA
+from onnx_chainer.functions.math import convert_Prod  # NOQA
 from onnx_chainer.functions.math import convert_Sum  # NOQA
 
 from onnx_chainer.functions.noise import convert_Dropout  # NOQA

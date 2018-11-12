@@ -59,6 +59,7 @@ operators = {
     'Absolute': ('Abs', (1, 6)),
     'Div': ('Div', (1, 6, 7)),
     'Mul': ('Mul', (1, 6, 7)),
+    'MulConstant': ('Mul', (1, 6, 7)),
     'Neg': ('Neg', (1, 6)),
     'PowVarConst': ('Pow', (1, 7)),
     'Sub': ('Sub', (1, 6, 7)),
@@ -69,6 +70,11 @@ operators = {
     'Maximum': ('Max', (1, 6)),
     'Minimum': ('Min', (1, 6)),
     'Sqrt': ('Sqrt', (1, 6)),
+    'LogSumExp': ('ReduceLogSumExp', 1),
+    'Max': ('ReduceMax', 1),
+    'Mean': ('ReduceMean', 1),
+    'Min': ('ReduceMin', 1),
+    'Prod': ('ReduceProd', 1),
     'Sum': ('ReduceSum', 1),
 
     # Noise
