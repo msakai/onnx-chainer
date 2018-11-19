@@ -237,11 +237,14 @@ def convert_Where(func, onnx_op_name, opset_version, input_names, output_names, 
     kwargs = {"consumed_inputs": [1, 1]} if opset_version == 1 else {}
     kwargs2 = {} if opset_version >= 7 else {"broadcast": 1}
 
-    n1 = helper.make_node(
-        "Cast", [input_names[0]], [n1_out_name],
-        to=mapping.TENSOR_TYPE_TO_NAME[NP_TYPE_TO_TENSOR_TYPE[typ]]
-    )
-    n2 = helper.make_node("Sub", [str(id(one)), n1_out_name], [n2_out_name], **kwargs, **kwargs2)
+    if opset_version == 1:
+        to = mapping.TENSOR_TYPE_TO_NAME[NP_TYPE_TO_TENSOR_TYPE[typ]]
+    else:
+        to = NP_TYPE_TO_TENSOR_TYPE[typ]
+
+    n1 = helper.make_node("Cast", [input_names[0]], [n1_out_name], to=to)
+    n2 = helper.make_node("Sub" if opset_version==7 else "Sub-%d" % opset_version,
+                          [str(id(one)), n1_out_name], [n2_out_name], **kwargs, **kwargs2)
     n3 = helper.make_node("Mul", [n1_out_name, input_names[1]], [n3_out_name], **kwargs)
     n4 = helper.make_node("Mul", [n2_out_name, input_names[2]], [n4_out_name], **kwargs)
     n5 = helper.make_node("Add", [n3_out_name, n4_out_name], [output_names[0]], **kwargs)
