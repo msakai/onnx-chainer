@@ -163,6 +163,6 @@ class TestWhere(unittest.TestCase):
         for opset_version in range(
                 test_onnxruntime.MINIMUM_OPSET_VERSION,
                 onnx.defs.onnx_opset_version() + 1):
-            test_onnxruntime.check_output(
-                self.model, (self.cond, self.x1, self.x2), self.fn,
-                opset_version=opset_version)
+            onnx_chainer.export(self.model,
+                                (self.cond, self.x1, self.x2),
+                                self.fn, opset_version=opset_version)
