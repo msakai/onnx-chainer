@@ -20,6 +20,7 @@ TENSOR_TYPE_TO_NAME = {
 # Chainer Function -> (ONNX Operator, Operator set IDs)
 operators = {
     # Activation
+    'ClippedReLU': ('Clip', (1, 6)),
     'ELU': ('Elu', (1, 6)),
     'HardSigmoid': ('HardSigmoid', (1, 6)),
     'LeakyReLU': ('LeakyRelu', (1, 6)),
@@ -70,6 +71,7 @@ operators = {
     'Maximum': ('Max', (1, 6, 8)),
     'Minimum': ('Min', (1, 6, 8)),
     'Sqrt': ('Sqrt', (1, 6)),
+    'LinearInterpolate': (None, (1, 6, 7)),
     'LogSumExp': ('ReduceLogSumExp', (1,)),
     'Max': ('ReduceMax', (1,)),
     'Mean': ('ReduceMean', (1,)),

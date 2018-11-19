@@ -14,7 +14,7 @@ ONNX-Chainer supports opset version <= 7.
 - Python 3.5.5, 3.6.7
 - ONNX-Runtime 0.1.3
 
-***** (You can still specify all opset versions <= 8, but please noted that opset versions <= 6 are not tested) **
+**(You can still specify all opset versions <= 8, but please noted that opset versions <= 6 are not tested)**
 
 ## Installation
 
@@ -230,10 +230,11 @@ Export function for chainer.Chain in ONNX format.
 
 ## Supported Functions
 
-Currently 51 Chainer Functions are supported to export in ONNX format.
+Currently 59 Chainer Functions are supported to export in ONNX format.
 
 ### Activation
 
+- ClippedReLU
 - ELU
 - HardSigmoid
 - LeakyReLU
@@ -292,6 +293,7 @@ Currently 51 Chainer Functions are supported to export in ONNX format.
 - Min
 _ Prod
 - Sum
+- LinearInterpolate
 
 ### Noise
 
