@@ -159,11 +159,6 @@ class TestWhere(unittest.TestCase):
         self.x2 = np.zeros((2, 2), np.float32)
         self.fn = 'Where.onnx'
 
-    def test_backend(self):
-        y = self.model(self.cond, self.x1, self.x2)
-        onnx_model = onnx_chainer.export(self.model, (self.cond, self.x1, self.x2))
-        model.expect(onnx_model, (self.cond, self.x1, self.x2), y)
-
     def test_output(self):
         for opset_version in range(
                 test_onnxruntime.MINIMUM_OPSET_VERSION,
